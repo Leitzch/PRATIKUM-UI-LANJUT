@@ -6,14 +6,8 @@ const isScrolled = ref(false)
 const route = useRoute()
 
 const menus = [
-  { 
-    name: 'Home', 
-    path: '/' 
-  },
-  { 
-    name: 'About', 
-    path: '/about' 
-  },
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
   {
     name: 'Browse',
     path: '/browse',
@@ -21,15 +15,12 @@ const menus = [
       {
         name: 'Event List',
         path: '/browse/events',
-        children: [{ name: 'Event Detail (Sample)', path: '/browse/events/1' }]
+        children: [{ name: 'Event Detail (Sample)', path: '/browse/events/1' }],
       },
-      { name: 'Category', path: '/browse/category' }
-    ]
+      { name: 'Category', path: '/browse/category' },
+    ],
   },
-  { 
-    name: 'Contact', 
-    path: '/contact' 
-  }
+  { name: 'Contact', path: '/contact' },{ name: 'Organizer Dashboard', path: '/dashboard' },
 ]
 
 const handleScroll = () => {
@@ -76,8 +67,7 @@ onUnmounted(() => {
             class="nav-link"
             :class="{
               active:
-                route.path === menu.path ||
-                (menu.path !== '/' && route.path.startsWith(menu.path)),
+                route.path === menu.path || (menu.path !== '/' && route.path.startsWith(menu.path)),
             }"
           >
             {{ menu.name }}
@@ -120,11 +110,7 @@ onUnmounted(() => {
 
               <!-- Second Level Dropdown (Submenu) -->
               <ul v-if="child.children" class="submenu">
-                <li
-                  v-for="subchild in child.children"
-                  :key="subchild.name"
-                  class="submenu-item"
-                >
+                <li v-for="subchild in child.children" :key="subchild.name" class="submenu-item">
                   <router-link :to="subchild.path" class="dropdown-link">
                     {{ subchild.name }}
                   </router-link>
@@ -191,6 +177,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* NAVBAR FULL-WIDTH menyatu dengan bagian atas layar */
 .navbar {
   width: 100%;
   background: var(--nav-bg, #1c1948);
@@ -228,19 +215,15 @@ onUnmounted(() => {
   padding-right: 2rem;
   transition: transform 0.3s ease;
 }
-
 .logo:hover {
   transform: translateY(-2px);
 }
-
 .logo-icon {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .logo:hover .logo-icon {
   transform: rotate(15deg) scale(1.1);
 }
-
 .logo-text {
   font-size: 1.15rem;
   font-weight: 700;
@@ -263,7 +246,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 1rem 0;
+  padding: 1rem 0; /* Memberi ruang hover */
 }
 
 .nav-link {
@@ -284,12 +267,10 @@ onUnmounted(() => {
   font-weight: 600;
   box-shadow: 0 4px 15px rgba(102, 68, 255, 0.3);
 }
-
 .nav-link.active:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 68, 255, 0.5);
 }
-
 .nav-link:not(.active):hover {
   background-color: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
@@ -298,17 +279,21 @@ onUnmounted(() => {
 .dropdown-indicator {
   transition: transform 0.3s ease;
 }
-
 .nav-item:hover .dropdown-indicator {
   transform: rotate(180deg);
 }
 
+/* ==================================
+   DROPDOWN & SUBMENU STYLES
+   Inspired by user reference image
+   ================================== */
 .dropdown-menu {
-  display: none;
+  display: none; /* diubah jadi block saat hover */
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #d8d8d8;
+
+  background-color: #d8d8d8; /* warna abu seperti referensi */
   min-width: 200px;
   list-style: none;
   padding: 0;
@@ -317,13 +302,14 @@ onUnmounted(() => {
   border-radius: 4px;
 }
 
+/* Tampilkan dropdown level 1 saat nav-item di-hover */
 .nav-item:hover .dropdown-menu {
   display: block;
   animation: fadeIn 0.2s ease-out;
 }
 
 .dropdown-item {
-  position: relative;
+  position: relative; /* relative untuk submenu absolut */
 }
 
 .dropdown-link {
@@ -332,21 +318,25 @@ onUnmounted(() => {
   align-items: center;
   padding: 12px 20px;
   text-decoration: none;
-  color: #333;
+  color: #333; /* text gelap */
   font-size: 0.95rem;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .dropdown-link:hover {
-  background-color: #c4c4c4;
+  background-color: #c4c4c4; /* efek hover lebih gelap sedikit */
   color: #000;
 }
 
+/* Hilangkan border bawah pada item terakhir */
 .dropdown-item:last-child .dropdown-link {
   border-bottom: none;
 }
 
+/* Submenu (Level 2) */
 .submenu {
   display: none;
   position: absolute;
@@ -361,6 +351,7 @@ onUnmounted(() => {
   border-radius: 4px;
 }
 
+/* Tampilkan submenu level 2 saat dropdown-item di-hover */
 .dropdown-item:hover .submenu {
   display: block;
   animation: fadeIn 0.2s ease-out;
@@ -377,12 +368,18 @@ onUnmounted(() => {
   }
 }
 
+/* Submenu pada parent (jika left:100% terlalu mentok layar) 
+   Kita bisa membiarkannya default left 100%.
+*/
+
+/* ==================================
+   RIGHT SECTION
+   ================================== */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
-
 .lang-selector {
   display: flex;
   align-items: center;
@@ -395,15 +392,12 @@ onUnmounted(() => {
   border-radius: 8px;
   transition: all 0.3s ease;
 }
-
 .lang-selector:hover {
   background: rgba(255, 255, 255, 0.1);
 }
-
 .lang-selector:hover .chevron {
   transform: translateY(2px);
 }
-
 .chevron {
   transition: transform 0.3s ease;
   margin-top: 2px;
@@ -422,7 +416,6 @@ onUnmounted(() => {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .hamburger-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   transform: scale(1.05);
@@ -433,7 +426,6 @@ onUnmounted(() => {
     gap: 1rem;
   }
 }
-
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -442,4 +434,4 @@ onUnmounted(() => {
     display: none;
   }
 }
-</style>s
+</style>
