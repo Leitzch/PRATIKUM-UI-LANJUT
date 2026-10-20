@@ -55,14 +55,19 @@ const routes = [
     ]
   },
   {
-    /* AREA PENYELENGGARA ACARA (DASHBOARD) */
     path: '/dashboard',
+    /* AREA PENYELENGGARA ACARA (DASHBOARD) */
     component: DashboardLayout,
     children: [
       {
         path: '',
         name: 'dashboard-overview',
         component: () => import('@/views/Dashboard.vue')
+      },
+      {
+        path: 'events',
+        name: 'dashboard-events',
+        component: () => import('@/views/EventManagement.vue')
       }
     ]
   }
