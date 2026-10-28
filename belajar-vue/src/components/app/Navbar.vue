@@ -15,12 +15,13 @@ const menus = [
       {
         name: 'Event List',
         path: '/browse/events',
-        children: [{ name: 'Event Detail (Sample)', path: '/browse/events/1' }],
       },
       { name: 'Category', path: '/browse/category' },
+      { name: 'Your Events', path: '/browse/your-events' },
     ],
   },
-  { name: 'Contact', path: '/contact' },{ name: 'Organizer Dashboard', path: '/dashboard' },
+  { name: 'Contact', path: '/contact' },
+  { name: 'Organizer Dashboard', path: '/dashboard' },
 ]
 
 const handleScroll = () => {
@@ -283,10 +284,10 @@ onUnmounted(() => {
   transform: rotate(180deg);
 }
 
-/* ==================================
+/* =========================================
    DROPDOWN & SUBMENU STYLES
    Inspired by user reference image
-   ================================== */
+   ========================================= */
 .dropdown-menu {
   display: none; /* diubah jadi block saat hover */
   position: absolute;
@@ -368,13 +369,13 @@ onUnmounted(() => {
   }
 }
 
-/* Submenu pada parent (jika left:100% terlalu mentok layar) 
+/* Submenu pada parent (jika left:100% terlalu mentok layar)
    Kita bisa membiarkannya default left 100%.
 */
 
-/* ==================================
+/* =========================================
    RIGHT SECTION
-   ================================== */
+   ========================================= */
 .nav-right {
   display: flex;
   align-items: center;
